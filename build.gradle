@@ -1,0 +1,49 @@
+apply plugin: 'java'
+
+group = pluginGroup
+version = pluginVersion
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+def MINECRAFT_VERSION = '1.8.8'
+def SERVER_VERSION = MINECRAFT_VERSION + '-SNAPSHOT'
+def BUKKIT_VERSION = MINECRAFT_VERSION + '-R0.1-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+    mavenLocal()
+    maven {
+        name = 'spigotmc-repo'
+        url = 'https://hub.spigotmc.org/nexus/content/groups/public/'
+    }
+    maven {
+        name = 'sonatype'
+        url = 'https://oss.sonatype.org/content/groups/public/'
+    }
+}
+
+dependencies {
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+
+    compile group: 'org.spigotmc', name: 'spigot-api', version: BUKKIT_VERSION
+    compile group: 'org.bukkit', name: 'bukkit', version: BUKKIT_VERSION
+    compile group: 'org.bukkit', name: 'craftbukkit', version: BUKKIT_VERSION
+    compile group: 'org.spigotmc', name: 'minecraft-server', version: SERVER_VERSION
+
+    //Reflections
+    compile group: 'org.slf4j', name: 'slf4j-api', version: '1.7.24'
+    compile group: 'dom4j', name: 'dom4j', version: '1.6.1'
+    compile group: 'javax.servlet', name: 'servlet-api', version: '2.5'
+    compile group: 'com.google.code.findbugs', name: 'jsr305', version: '3.0.0'
+    compile files("${System.properties['java.home']}/../lib/tools.jar")
+    compile group: 'org.apache.commons', name: 'commons-vfs2', version: '2.2'
+}
+
+import org.apache.tools.ant.filters.ReplaceTokens
+
+processResources {
+    from(sourceSets.main.resources.srcDirs) {
+        filter ReplaceTokens, tokens: [version: version]
+    }
+}
