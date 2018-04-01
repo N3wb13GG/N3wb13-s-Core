@@ -1,6 +1,7 @@
 package n3wb13.core.managers.guis;
 
 import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.Inventory;
 
 public class MyGui {
@@ -16,5 +17,8 @@ public class MyGui {
     }
 
     public void onInventoryClick(InventoryClickEvent event) {
+    }
+
+    public void onInventoryClose(InventoryCloseEvent event) {
     }
 }

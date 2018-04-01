@@ -1,4 +1,4 @@
-name: N3wb13's Core
+name: N3wb13_Core
 version: @version@
 main: n3wb13.core.Core
 load: STARTUP

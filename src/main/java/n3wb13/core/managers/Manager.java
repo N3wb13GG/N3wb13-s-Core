@@ -4,15 +4,15 @@ import org.bukkit.plugin.Plugin;
 
 public class Manager {
 
-    protected final Plugin plugin;
-
-    public Manager(Plugin plugin) {
-        this.plugin = plugin;
-    }
+    protected Plugin plugin;
 
     public void load() {
     }
 
     public void unload() {
+    }
+
+    public void setPlugin(Plugin plugin) {
+        this.plugin = plugin;
     }
 }

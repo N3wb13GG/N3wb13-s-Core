@@ -11,7 +11,6 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.plugin.Plugin;
 import org.reflections.Reflections;
 import org.reflections.scanners.ResourcesScanner;
 import org.reflections.scanners.SubTypesScanner;
@@ -25,10 +24,6 @@ import java.util.Set;
 public class ItemManager extends Manager {
 
     private Map<String, MyItem> myItems = new HashMap<>();
-
-    public ItemManager(Plugin plugin) {
-        super(plugin);
-    }
 
     @Override
     public void load() {

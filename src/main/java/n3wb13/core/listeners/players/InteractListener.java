@@ -13,11 +13,12 @@ public class InteractListener implements Listener, IMyListener {
 
     @EventHandler
     public void onItemUse(PlayerInteractEvent event) {
-        if (event.getItem() != null)
+        if (event.getItem() != null) {
             for (Plugin plugin : Core.getInstance().managers.getManagers().keySet()) {
                 for (Manager manager : Core.getInstance().managers.getManagers().get(plugin)) {
                     if (manager instanceof ItemManager) ((ItemManager) manager).onItemUse(event);
                 }
             }
+        }
     }
 }

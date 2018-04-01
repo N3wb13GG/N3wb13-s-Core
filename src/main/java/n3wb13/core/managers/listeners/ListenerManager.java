@@ -4,7 +4,6 @@ import n3wb13.core.managers.Manager;
 import n3wb13.core.utils.ServerUtil;
 import org.bukkit.ChatColor;
 import org.bukkit.event.Listener;
-import org.bukkit.plugin.Plugin;
 import org.reflections.Reflections;
 import org.reflections.scanners.ResourcesScanner;
 import org.reflections.scanners.SubTypesScanner;
@@ -18,10 +17,6 @@ import java.util.Set;
 public class ListenerManager extends Manager {
 
     private List<Listener> myListeners = new ArrayList<>();
-
-    public ListenerManager(Plugin plugin) {
-        super(plugin);
-    }
 
     public List<Listener> getMyListners() {
         return myListeners;

@@ -5,7 +5,6 @@ import n3wb13.core.utils.ServerUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandMap;
-import org.bukkit.plugin.Plugin;
 import org.reflections.Reflections;
 import org.reflections.scanners.ResourcesScanner;
 import org.reflections.scanners.SubTypesScanner;
@@ -20,10 +19,6 @@ import java.util.Set;
 public class CommandManager extends Manager {
 
     private List<MyCommand> myCommands = new ArrayList<>();
-
-    public CommandManager(Plugin plugin) {
-        super(plugin);
-    }
 
     public List<MyCommand> getMyCommands() {
         return myCommands;
