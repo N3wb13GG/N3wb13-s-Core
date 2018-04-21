@@ -1,9 +1,8 @@
 package n3wb13.core.managers.items;
 
 import n3wb13.core.managers.Manager;
-import n3wb13.core.utils.ItemUtil;
-import n3wb13.core.utils.ServerUtil;
-import net.minecraft.server.v1_8_R3.NBTTagCompound;
+import n3wb13.core.utils.CoreLogger;
+import n3wb13.core.utils.itemnbtapi.NBTItem;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.event.entity.ItemSpawnEvent;
@@ -11,6 +10,7 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.plugin.Plugin;
 import org.reflections.Reflections;
 import org.reflections.scanners.ResourcesScanner;
 import org.reflections.scanners.SubTypesScanner;
@@ -21,9 +21,13 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
-public class ItemManager extends Manager {
+public final class ItemManager extends Manager {
 
     private Map<String, MyItem> myItems = new HashMap<>();
+
+    public ItemManager(Plugin plugin) {
+        super(plugin);
+    }
 
     @Override
     public void load() {
@@ -42,7 +46,7 @@ public class ItemManager extends Manager {
             }
         } catch (Exception e) {
             //ここに入った時点でアウト
-            ServerUtil.errorLog(plugin, ChatColor.RED + "Reflection Error!", true);
+            CoreLogger.errorLog(CoreLogger.getNameFormat(plugin) + ChatColor.RED + "Reflection Error!", true);
         }
     }
 
@@ -56,11 +60,11 @@ public class ItemManager extends Manager {
 
     public void onInventoryClick(InventoryClickEvent event) {
         if (event.getCurrentItem() != null || event.getCursor() != null) {
-            NBTTagCompound currentNBT = ItemUtil.getNTB(new ItemStack(Material.AIR));
-            NBTTagCompound cursorNBT = currentNBT;
+            NBTItem currentNBT = new NBTItem(new ItemStack(Material.AIR));
+            NBTItem cursorNBT = currentNBT;
 
-            if (event.getCurrentItem() != null) currentNBT = ItemUtil.getNTB(event.getCurrentItem());
-            if (event.getCursor() != null) cursorNBT = ItemUtil.getNTB(event.getCurrentItem());
+            if (event.getCurrentItem() != null) currentNBT = new NBTItem(event.getCurrentItem());
+            if (event.getCursor() != null) cursorNBT = new NBTItem(event.getCurrentItem());
 
             if (currentNBT.getString("Plugin").equals(plugin.getName()) || cursorNBT.getString("Plugin").equals(plugin.getName())) {
                 if (myItems.containsKey(currentNBT.getString("Name")))
@@ -72,19 +76,19 @@ public class ItemManager extends Manager {
     }
 
     public void onDrop(PlayerDropItemEvent event) {
-        NBTTagCompound nbtTag = ItemUtil.getNTB(event.getItemDrop().getItemStack());
+        NBTItem nbtTag = new NBTItem(event.getItemDrop().getItemStack());
         if (nbtTag.getString("Plugin").equals(plugin.getName()) && myItems.containsKey(nbtTag.getString("Name")))
             myItems.get(nbtTag.getString("Name")).onDrop(event);
     }
 
     public void onItemSpawn(ItemSpawnEvent event) {
-        NBTTagCompound nbtTag = ItemUtil.getNTB(event.getEntity().getItemStack());
+        NBTItem nbtTag = new NBTItem(event.getEntity().getItemStack());
         if (nbtTag.getString("Plugin").equals(plugin.getName()) && myItems.containsKey(nbtTag.getString("Name")))
             myItems.get(nbtTag.getString("Name")).onItemSpawn(event);
     }
 
     public void onItemUse(PlayerInteractEvent event) {
-        NBTTagCompound nbtTag = ItemUtil.getNTB(event.getItem());
+        NBTItem nbtTag = new NBTItem(event.getItem());
         if (nbtTag.getString("Plugin").equals(plugin.getName()) && myItems.containsKey(nbtTag.getString("Name")))
             myItems.get(nbtTag.getString("Name")).onItemUse(event);
     }

@@ -1,10 +1,11 @@
 package n3wb13.core.managers.commands;
 
 import n3wb13.core.managers.Manager;
-import n3wb13.core.utils.ServerUtil;
+import n3wb13.core.utils.CoreLogger;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandMap;
+import org.bukkit.plugin.Plugin;
 import org.reflections.Reflections;
 import org.reflections.scanners.ResourcesScanner;
 import org.reflections.scanners.SubTypesScanner;
@@ -16,12 +17,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-public class CommandManager extends Manager {
+public final class CommandManager extends Manager {
 
     private List<MyCommand> myCommands = new ArrayList<>();
 
-    public List<MyCommand> getMyCommands() {
-        return myCommands;
+    public CommandManager(Plugin plugin) {
+        super(plugin);
     }
 
     @Override
@@ -52,7 +53,7 @@ public class CommandManager extends Manager {
 
         } catch (Exception e) {
             //ここに入った時点でアウト
-            ServerUtil.errorLog(plugin, ChatColor.RED + "Reflection Error!", true);
+            CoreLogger.errorLog(CoreLogger.getNameFormat(plugin) + ChatColor.RED + "Reflection Error!", true);
         }
     }
 
@@ -71,12 +72,16 @@ public class CommandManager extends Manager {
 
                     myCommand.addSubCommand(subCommand);
 
-                    if (list1.size() > 0) registerSubCommands(subCommand);
+                    registerSubCommands(subCommand);
                 }
             }
         } catch (Exception e) {
             //ここに入った時点でアウト
-            ServerUtil.errorLog(plugin, ChatColor.RED + "Reflection Error!", true);
+            CoreLogger.errorLog(CoreLogger.getNameFormat(plugin) + ChatColor.RED + "Reflection Error!", true);
         }
+    }
+
+    public List<MyCommand> getMyCommands() {
+        return myCommands;
     }
 }

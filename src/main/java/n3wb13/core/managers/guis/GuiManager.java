@@ -5,14 +5,19 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.Inventory;
+import org.bukkit.plugin.Plugin;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class GuiManager extends Manager {
+public final class GuiManager extends Manager {
 
     private Map<Inventory, MyGui> myGuis = new HashMap<>();
     private Map<MyGui, Player> viwes = new HashMap<>();
+
+    public GuiManager(Plugin plugin) {
+        super(plugin);
+    }
 
     public MyGui getMyGui(Inventory inventory) {
         return myGuis.get(inventory);

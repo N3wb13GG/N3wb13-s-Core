@@ -1,7 +1,6 @@
 package n3wb13.core.managers.items;
 
-import n3wb13.core.utils.ItemUtil;
-import net.minecraft.server.v1_8_R3.NBTTagCompound;
+import n3wb13.core.utils.itemnbtapi.NBTItem;
 import org.bukkit.event.entity.ItemSpawnEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
@@ -30,10 +29,10 @@ public class MyItem {
     }
 
     protected void setItemStack(ItemStack itemStack) {
-        NBTTagCompound nbtTag = ItemUtil.getNTB(itemStack);
+        NBTItem nbtTag = new NBTItem(itemStack);
         nbtTag.setString("Plugin", plugin.getName());
         nbtTag.setString("Name", name);
-        itemStack = ItemUtil.setNTB(itemStack, nbtTag);
+        itemStack = nbtTag.getItem();
 
         this.itemStack = itemStack;
     }
