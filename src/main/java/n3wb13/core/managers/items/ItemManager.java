@@ -59,10 +59,11 @@ public final class ItemManager extends Manager {
     }
 
     public void onInventoryClick(InventoryClickEvent event) {
-        if (event.getCurrentItem() != null || event.getCursor() != null) {
+        if (event.getRawSlot() >= 0 && (event.getCurrentItem() != null || event.getCursor() != null)) {
             NBTItem currentNBT = new NBTItem(new ItemStack(Material.AIR));
             NBTItem cursorNBT = currentNBT;
 
+            //CoreLogger.log(event.getCursor() + ", " + event.getCurrentItem() + ", " + event.getRawSlot());
             if (event.getCurrentItem() != null) currentNBT = new NBTItem(event.getCurrentItem());
             if (event.getCursor() != null) cursorNBT = new NBTItem(event.getCurrentItem());
 

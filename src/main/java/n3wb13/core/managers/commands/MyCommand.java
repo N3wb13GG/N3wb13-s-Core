@@ -3,10 +3,8 @@ package n3wb13.core.managers.commands;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.defaults.BukkitCommand;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.lang.reflect.Array;
+import java.util.*;
 
 public class MyCommand extends BukkitCommand {
 
@@ -14,6 +12,12 @@ public class MyCommand extends BukkitCommand {
 
     public MyCommand(String name) {
         super(name);
+    }
+
+    public MyCommand(String name, List<String> alias) {
+        super(name);
+
+        setAliases(alias);
     }
 
     @Override
